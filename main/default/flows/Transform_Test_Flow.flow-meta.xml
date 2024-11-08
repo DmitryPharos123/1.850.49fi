@@ -27,10 +27,31 @@
         <collectionReference>TEsteeee</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_Collection_Filter_test.BillingCity</leftValueReference>
-            <operator>IsNull</operator>
+            <leftValueReference>currentItem_Collection_Filter_test.Active__c</leftValueReference>
+            <operator>WasSet</operator>
             <rightValue>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_Collection_Filter_test.BillingCountry</leftValueReference>
+            <operator>IsBlank</operator>
+            <rightValue>
+                <booleanValue>true</booleanValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_Collection_Filter_test.AnnualRevenue</leftValueReference>
+            <operator>GreaterThanOrEqualTo</operator>
+            <rightValue>
+                <numberValue>1000.0</numberValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_Collection_Filter_test.NumberOfEmployees</leftValueReference>
+            <operator>LessThanOrEqualTo</operator>
+            <rightValue>
+                <numberValue>5.0</numberValue>
             </rightValue>
         </conditions>
         <connector>
@@ -49,7 +70,6 @@
         <connector>
             <targetReference>Collection_Filter_test</targetReference>
         </connector>
-        <limit>5</limit>
         <sortOptions>
             <doesPutEmptyStringAndNullFirst>true</doesPutEmptyStringAndNullFirst>
             <sortField>BillingCity</sortField>
@@ -98,7 +118,7 @@
         <locationX>286</locationX>
         <locationY>1248</locationY>
         <collectionReference>Collection_Filter_test</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
+        <iterationOrder>Desc</iterationOrder>
         <noMoreValuesConnector>
             <targetReference>Description</targetReference>
         </noMoreValuesConnector>
