@@ -5,11 +5,18 @@
         <description>Description TEST 1</description>
         <name>Test_Assignment</name>
         <label>Test Assignment</label>
-        <locationX>418</locationX>
+        <locationX>550</locationX>
         <locationY>276</locationY>
         <assignmentItems>
             <assignToReference>AccData</assignToReference>
             <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AccData.CreatedById</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>123434334344</stringValue>
+            </value>
         </assignmentItems>
         <connector>
             <targetReference>Test_Transform</targetReference>
@@ -20,7 +27,7 @@
         <name>Collection_Filter_test</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Collection Filter test</label>
-        <locationX>286</locationX>
+        <locationX>154</locationX>
         <locationY>1140</locationY>
         <assignNextValueToReference>currentItem_Collection_Filter_test</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
@@ -63,7 +70,7 @@
         <name>Collection_sort</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Collection sort</label>
-        <locationX>286</locationX>
+        <locationX>154</locationX>
         <locationY>1032</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>TEsteeee</collectionReference>
@@ -90,15 +97,22 @@
         <description>Description TEst 7</description>
         <name>Decision</name>
         <label>Decision</label>
-        <locationX>418</locationX>
+        <locationX>550</locationX>
         <locationY>924</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Outcome_1_of_Decision</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2</conditionLogic>
             <conditions>
                 <leftValueReference>Delete_test</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Test_Assignment</leftValueReference>
+                <operator>WasVisited</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -108,6 +122,50 @@
             </connector>
             <label>Outcome 1 of Decision</label>
         </rules>
+        <rules>
+            <name>Outcome_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Test_Assignment</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Test_Transform.CreatedBy.IsActive</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Created_Contact</targetReference>
+            </connector>
+            <label>Outcome 2</label>
+        </rules>
+        <rules>
+            <name>OUtcome_3</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Test_Assignment</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Test_Assignment</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Caaa</targetReference>
+            </connector>
+            <label>OUtcome 3</label>
+        </rules>
     </decisions>
     <interviewLabel>Transform Test Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Transform Test Flow</label>
@@ -115,7 +173,7 @@
         <description>Description TEst 10</description>
         <name>Loop_test</name>
         <label>Loop test</label>
-        <locationX>286</locationX>
+        <locationX>154</locationX>
         <locationY>1248</locationY>
         <collectionReference>Collection_Filter_test</collectionReference>
         <iterationOrder>Desc</iterationOrder>
@@ -146,7 +204,7 @@
         <description>Description TEst 3</description>
         <name>Create_Opp</name>
         <label>Create Opp</label>
-        <locationX>418</locationX>
+        <locationX>550</locationX>
         <locationY>492</locationY>
         <connector>
             <targetReference>Test_Update</targetReference>
@@ -163,11 +221,19 @@
         <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <description>Test</description>
+        <name>Created_Contact</name>
+        <label>Created Contact</label>
+        <locationX>418</locationX>
+        <locationY>1032</locationY>
+        <inputReference>AccData</inputReference>
+    </recordCreates>
     <recordDeletes>
         <description>Description TEst 6</description>
         <name>Delete_test</name>
         <label>Delete test</label>
-        <locationX>418</locationX>
+        <locationX>550</locationX>
         <locationY>816</locationY>
         <connector>
             <targetReference>Decision</targetReference>
@@ -221,7 +287,7 @@
         <description>Description TEst 5</description>
         <name>Get_Records</name>
         <label>Get Records</label>
-        <locationX>418</locationX>
+        <locationX>550</locationX>
         <locationY>708</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -243,7 +309,7 @@
         <description>Description Test 14</description>
         <name>Description</name>
         <label>Update Records 222</label>
-        <locationX>286</locationX>
+        <locationX>154</locationX>
         <locationY>1440</locationY>
         <inputAssignments>
             <field>BillingCountry</field>
@@ -257,18 +323,31 @@
         <description>Description Test 4</description>
         <name>Test_Update</name>
         <label>Test Update</label>
-        <locationX>418</locationX>
+        <locationX>550</locationX>
         <locationY>600</locationY>
         <connector>
             <targetReference>Get_Records</targetReference>
         </connector>
         <inputAssignments>
-            <field>AccountNumber</field>
+            <field>BillingCity</field>
             <value>
-                <stringValue>111111</stringValue>
+                <stringValue>Test</stringValue>
             </value>
         </inputAssignments>
-        <inputReference>$Record</inputReference>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Caaa</name>
+        <label>Update Caaa</label>
+        <locationX>682</locationX>
+        <locationY>1032</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <stringValue>Test</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Attachments</inputReference>
     </recordUpdates>
     <start>
         <locationX>50</locationX>
