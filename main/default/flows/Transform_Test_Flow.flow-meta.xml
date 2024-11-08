@@ -21,7 +21,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Collection Filter test</label>
         <locationX>286</locationX>
-        <locationY>1248</locationY>
+        <locationY>1140</locationY>
         <assignNextValueToReference>currentItem_Collection_Filter_test</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>TEsteeee</collectionReference>
@@ -43,15 +43,26 @@
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Collection sort</label>
         <locationX>286</locationX>
-        <locationY>1140</locationY>
+        <locationY>1032</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>TEsteeee</collectionReference>
         <connector>
             <targetReference>Collection_Filter_test</targetReference>
         </connector>
+        <limit>5</limit>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>true</doesPutEmptyStringAndNullFirst>
+            <sortField>BillingCity</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
         <sortOptions>
             <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
-            <sortField>BillingCity</sortField>
+            <sortField>Industry</sortField>
+            <sortOrder>Desc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>Type</sortField>
             <sortOrder>Asc</sortOrder>
         </sortOptions>
     </collectionProcessors>
@@ -73,7 +84,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Accounts</targetReference>
+                <targetReference>Collection_sort</targetReference>
             </connector>
             <label>Outcome 1 of Decision</label>
         </rules>
@@ -85,7 +96,7 @@
         <name>Loop_test</name>
         <label>Loop test</label>
         <locationX>286</locationX>
-        <locationY>1356</locationY>
+        <locationY>1248</locationY>
         <collectionReference>Collection_Filter_test</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <noMoreValuesConnector>
@@ -141,21 +152,51 @@
         <connector>
             <targetReference>Decision</targetReference>
         </connector>
-        <inputReference>Get_Records</inputReference>
-    </recordDeletes>
-    <recordLookups>
-        <name>Get_Accounts</name>
-        <label>Get Accounts</label>
-        <locationX>286</locationX>
-        <locationY>1032</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Collection_sort</targetReference>
-        </connector>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <filterLogic>(1 OR 2 OR 3 OR 4) AND 5 AND 6</filterLogic>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Fax</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phone</field>
+            <operator>EndsWith</operator>
+            <value>
+                <stringValue>234</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Industry</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>Test </stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Industry</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Communications</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AnnualRevenue</field>
+            <operator>NotIn</operator>
+            <value>
+                <numberValue>1111.0</numberValue>
+            </value>
+        </filters>
         <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
+    </recordDeletes>
     <recordLookups>
         <description>Description TEst 5</description>
         <name>Get_Records</name>
@@ -183,7 +224,7 @@
         <name>Description</name>
         <label>Update Records 222</label>
         <locationX>286</locationX>
-        <locationY>1548</locationY>
+        <locationY>1440</locationY>
         <inputAssignments>
             <field>BillingCountry</field>
             <value>
